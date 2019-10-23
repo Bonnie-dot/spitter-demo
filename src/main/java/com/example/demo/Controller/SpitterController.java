@@ -2,12 +2,14 @@ package com.example.demo.Controller;
 
 import com.example.demo.Model.Spitter;
 import com.example.demo.Service.SpitterService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/spitter")
@@ -24,11 +26,18 @@ public class SpitterController {
         return "registerForm";
     }
 
-    @GetMapping(value = "/test")
-    public String getTest(@RequestParam(name="userName", required=false) String userName, Model model){
-        Spitter spitter = this.spitterService.findSpitterByUserName(userName);
-        model.addAttribute("username",spitter.getUsername());
-        return "test";
+    @PostMapping("/submit")
+    public String saveRegisterData( @Valid Spitter spitter,
+                                    Errors errors){
+        if(errors.hasErrors()){
+            return "registerForm";
+        }
+        spitterService.saveSpitter(spitter);
+        return "";
     }
-
+    @GetMapping("/spitters")
+    public String getSpittles(Model model){
+        model.addAttribute("spitters",spitterService.getAllSpitters());
+        return "spitters";
+    }
 }
