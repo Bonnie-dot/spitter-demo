@@ -42,7 +42,7 @@ public class Spitter {
 
   // the default constructor exits only for the sake of JPA.
   // you don't use it directly,so it is designated as protected.
-  protected Spitter(){}
+  public Spitter(){}
 
   public Spitter(@NotNull @Size(min = 5, max = 16) String username, @NotNull @Size(min = 5, max = 25) String password, @NotNull @Size(min = 2, max = 30) String firstName, @NotNull @Size(min = 2, max = 30) String lastName, @NotNull @Email String email) {
     this.username = username;
