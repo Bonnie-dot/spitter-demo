@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -34,14 +35,16 @@ public class SpitterController {
 
     //form parameter
     @PostMapping("/register")
-    public String saveRegisterData( @Valid Spitter spitter,
-                                    BindingResult bindingResult,Model model){
+    public String saveRegisterData(@Valid Spitter spitter,
+                                   BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
         if(bindingResult.hasErrors()){
             model.addAttribute("spitters",new Spitter());
             return "registerForm";
         }
         spitterService.saveSpitter(spitter);
-        return "redirect:/spitter/userName/" + spitter.getUsername();
+        //redirect pass parameter:redirectAttributes
+        redirectAttributes.addAttribute("userName",spitter.getUsername());
+        return "redirect:/spitter/userName/{userName}";
     }
 
     @GetMapping("userName/{userName}")

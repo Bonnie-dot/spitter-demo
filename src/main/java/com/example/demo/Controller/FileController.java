@@ -24,6 +24,7 @@ public class FileController {
     @PostMapping("/uploadFile")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes){
         fssService.store(file);
+        ////redirect pass parameter:addFlashAttribute() 会话
         redirectAttributes.addFlashAttribute("message","You successfully uploaded " + file.getOriginalFilename() + "!");
         return "redirect:/file/form";
     }
