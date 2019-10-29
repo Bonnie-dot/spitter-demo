@@ -54,7 +54,7 @@
 
 <body>
 <h1>Register</h1>
-<form method="POST" th:object="${spitters}" >
+<form method="POST" th:object="${spitters}" enctype="multipart/form-data">
     <div class="errors" th:if="${#fields.hasErrors('*')}">
         <ul>
             <li th:each="err : ${#fields.errors('*')}"
@@ -80,6 +80,7 @@
     <label th:class="${#fields.hasErrors('password')}? 'error'">Password</label>:
     <input type="password" th:field="*{password}"
            th:class="${#fields.hasErrors('password')}? 'error'" /><br/>
+    <input type="file" name="file">
     <input type="submit" value="Register" />
 
 

@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Exception.SpittleNotFoundException;
 import com.example.demo.Model.Spitter;
 import com.example.demo.Service.SpitterService;
 import org.springframework.stereotype.Controller;
@@ -57,7 +58,11 @@ public class SpitterController {
     // PathVariable is used as a resource
     @GetMapping("/{spittleId}")
     public String getSpittleBySpittleId(@PathVariable("spittleId") long spittleId,Model model){
-        model.addAttribute("spitter",spitterService.getSpitterById(spittleId));
+        Spitter spitter = spitterService.getSpitterById(spittleId);
+        if (spitter==null){
+            throw new SpittleNotFoundException();
+        }
+        model.addAttribute("spitter",spitter);
         return "spitter";
     }
     //page start with 0

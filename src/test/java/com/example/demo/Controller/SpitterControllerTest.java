@@ -64,4 +64,10 @@ public class SpitterControllerTest {
         given(spitterService.saveSpitter(spitter)).willReturn(spitter);
         mockMvc.perform(post("/spitter/122"));
     }
+
+    @Test
+    public void getxx(){
+        List list=new ArrayList();
+        list.stream();
+    }
 }
